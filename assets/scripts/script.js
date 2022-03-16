@@ -14,24 +14,26 @@ let carmaker = ["audi",
 
 let cards = null;
 
+startGame();
+
 function startGame() {
     cards = createCardFromCarmaker(carmaker);
     shuffleCards(cards);
-    initializeCards();
+    initializeCards(cards);
 }
 
 function initializeCards(cards) {
     let gameBoard = document.getElementById("boardGame");
 
     cards.forEach((card) => {
-        let cardElement = document.createElement("div");
+        let cardElement = document.createElement('div');
             cardElement.id = card.id;
             cardElement.classList.add(CARD);
             cardElement.dataset.icon = card.icon;
 
             createCardContent(card,cardElement);
 
-            cardElement.addEventListener('click',flipCard());
+            cardElement.addEventListener('click',flipCard);
             gameBoard.appendChild(cardElement);
     });
 }
@@ -46,16 +48,17 @@ function createCardContent(card,cardElement) {
 function createCardFace(face, card, element) {
 
     let cardElementFace = document.createElement("div");
+    let iconElement = document.createElement("img");
         cardElementFace.classList.add(face);
 
         if (face === FRONT) {
-           let iconElement = document.createElement("img");
            iconElement.src = "assets/img/"+card.icon+".svg";
-           cardElementFace.appendChild(iconElement);
+           iconElement.classList.add(ICON);
         } else {
-           cardElementFace.innerHTML = "&lt/&gt"; 
+            iconElement.src = "assets/img/waze.svg";
         }
 
+        cardElementFace.appendChild(iconElement);
         element.appendChild(cardElementFace);
     
 }
@@ -75,27 +78,27 @@ function shuffleCards(cards){
 function createCardFromCarmaker(carmaker) {
     let cards = [];
 
-    carmaker.forEach((carmaker)=> {
-        cards.push(createPairFromCarmaker(i));
-    })
-    return cards.flatMap(pair => pair);
+    carmaker.forEach((carmaker) => {
+        cards.push(createPairFromCarmaker(carmaker));
+    });
+    return cards.flatMap((pair) => pair);
 }
 
 function createPairFromCarmaker(brand) {
     return [{
-        id: createId(),
+        id: createId(brand),
         icon:brand,
         flipped: false,
-    }, {id: createId(),
+    }, {id: createId(brand),
         icon:brand,
         flipped: false,
     }];
 }
 
 function createId(id){
-    return id + parseInt(Math.random() * 1000);
+    return id + "_" + parseInt(Math.random() * 1000);
 };
 
 function flipCard() {
-    this.classList.add("flip")
+    this.classList.add("flip");
 };
