@@ -71,7 +71,7 @@ function flipCard() {
                     firstCardView.classList.remove("flip");
                     secondCardView.classList.remove("flip");
                     game.unflipCards();
-                }, 1300);
+                }, 1000);
             }
 
         }
