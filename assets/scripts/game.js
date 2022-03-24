@@ -4,9 +4,23 @@ let game = {
     firstCard: null,
     secondCard: null,
 
+    carmaker: [
+        "audi",
+        "bmw",
+        "chevrolet",
+        "ford",
+        "hyundai",
+        "jeep",
+        "kia",
+        "renault",
+        "toyota",
+        "volkswagen"],
+
+    cards: null,
+
     setCard: function (id) {
         let card = this.cards.filter((card) => card.id === id)[0];
-        console.log(card);
+
         if ((card.flipped) || (this.lockMode)) {
             return false;
         } else if (!this.firstCard) {
@@ -22,7 +36,7 @@ let game = {
     },
 
     checkMatch: function () {
-        if (!this.firstCard || this.secondCard) {
+        if (!this.firstCard || !this.secondCard) {
             return false;
         }
         return this.firstCard.icon === this.secondCard.icon;
@@ -40,19 +54,10 @@ let game = {
         this.clearCards();
     },
 
-    carmaker: [
-        "audi",
-        "bmw",
-        "chevrolet",
-        "ford",
-        "hyundai",
-        "jeep",
-        "kia",
-        "renault",
-        "toyota",
-        "volkswagen"],
+    checkGameOver: function () {
 
-    cards: null,
+        return this.cards.filter((card) => !card.flipped).length === 0;
+    },
 
     createCardFromCarmaker: function () {
         this.cards = [];
